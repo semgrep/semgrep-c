@@ -55,7 +55,7 @@ let children_regexps : (string * Run.exp option) list = [
       Token (Literal "inline");
     |];
   );
-  "imm_tok_LPAR", None;
+  "imm_tok_lpar", None;
   "imm_tok_pat_36637e2", None;
   "pat_25b90ba", None;
   "identifier", None;
@@ -107,7 +107,7 @@ let children_regexps : (string * Run.exp option) list = [
     ];
   );
   "pat_9d92f6a", None;
-  "imm_tok_pat_c7f65b4", None;
+  "imm_tok_prec_p1_pat_c7f65b4", None;
   "ms_declspec_modifier",
   Some (
     Seq [
@@ -150,7 +150,7 @@ let children_regexps : (string * Run.exp option) list = [
   "preproc_params",
   Some (
     Seq [
-      Token (Name "imm_tok_LPAR");
+      Token (Name "imm_tok_lpar");
       Opt (
         Seq [
           Alt [|
@@ -249,7 +249,7 @@ let children_regexps : (string * Run.exp option) list = [
       |];
       Repeat (
         Alt [|
-          Token (Name "imm_tok_pat_c7f65b4");
+          Token (Name "imm_tok_prec_p1_pat_c7f65b4");
           Token (Name "escape_sequence");
         |];
       );
@@ -2007,7 +2007,7 @@ let trans_storage_class_specifier ((kind, body) : mt) : CST.storage_class_specif
       )
   | Leaf _ -> assert false
 
-let trans_imm_tok_LPAR ((kind, body) : mt) : CST.imm_tok_LPAR =
+let trans_imm_tok_lpar ((kind, body) : mt) : CST.imm_tok_lpar =
   match body with
   | Leaf v -> v
   | Children _ -> assert false
@@ -2184,7 +2184,7 @@ let trans_pat_9d92f6a ((kind, body) : mt) : CST.pat_9d92f6a =
   | Leaf v -> v
   | Children _ -> assert false
 
-let trans_imm_tok_pat_c7f65b4 ((kind, body) : mt) : CST.imm_tok_pat_c7f65b4 =
+let trans_imm_tok_prec_p1_pat_c7f65b4 ((kind, body) : mt) : CST.imm_tok_prec_p1_pat_c7f65b4 =
   match body with
   | Leaf v -> v
   | Children _ -> assert false
@@ -2272,7 +2272,7 @@ let trans_preproc_params ((kind, body) : mt) : CST.preproc_params =
       (match v with
       | Seq [v0; v1; v2] ->
           (
-            trans_imm_tok_LPAR (Run.matcher_token v0),
+            trans_imm_tok_lpar (Run.matcher_token v0),
             Run.opt
               (fun v ->
                 (match v with
@@ -2515,8 +2515,8 @@ let trans_string_literal ((kind, body) : mt) : CST.string_literal =
               (fun v ->
                 (match v with
                 | Alt (0, v) ->
-                    `Imm_tok_pat_c7f65b4 (
-                      trans_imm_tok_pat_c7f65b4 (Run.matcher_token v)
+                    `Imm_tok_prec_p1_pat_c7f65b4 (
+                      trans_imm_tok_prec_p1_pat_c7f65b4 (Run.matcher_token v)
                     )
                 | Alt (1, v) ->
                     `Esc_seq (

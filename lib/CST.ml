@@ -8,6 +8,9 @@
 open! Sexplib.Conv
 open Tree_sitter_run
 
+type imm_tok_lpar = Token.t (* "(" *)
+[@@deriving sexp_of]
+
 type false_ = Token.t
 [@@deriving sexp_of]
 
@@ -36,7 +39,7 @@ type type_qualifier = [
 ]
 [@@deriving sexp_of]
 
-type imm_tok_pat_c7f65b4 = Token.t (* pattern "[^\\\\\"\\n]+" *)
+type imm_tok_prec_p1_pat_c7f65b4 = Token.t (* pattern "[^\\\\\"\\n]+" *)
 [@@deriving sexp_of]
 
 type identifier = Token.t (* pattern [a-zA-Z_]\w* *)
@@ -121,7 +124,7 @@ type string_literal = (
       | `DQUOT of Token.t (* "\"" *)
     ]
   * [
-        `Imm_tok_pat_c7f65b4 of imm_tok_pat_c7f65b4 (*tok*)
+        `Imm_tok_prec_p1_pat_c7f65b4 of imm_tok_prec_p1_pat_c7f65b4
       | `Esc_seq of escape_sequence (*tok*)
     ]
       list (* zero or more *)
@@ -139,15 +142,15 @@ type char_literal = (
     ]
   * [
         `Esc_seq of escape_sequence (*tok*)
-      | `Imm_tok_pat_36637e2 of imm_tok_pat_36637e2 (*tok*)
+      | `Imm_tok_pat_36637e2 of imm_tok_pat_36637e2
     ]
   * Token.t (* "'" *)
 )
 [@@deriving sexp_of]
 
 type anon_choice_pat_25b90ba_4a37f8c = [
-    `Pat_25b90ba of pat_25b90ba (*tok*)
-  | `Pat_9d92f6a of pat_9d92f6a (*tok*)
+    `Pat_25b90ba of pat_25b90ba
+  | `Pat_9d92f6a of pat_9d92f6a
 ]
 [@@deriving sexp_of]
 
@@ -191,7 +194,7 @@ type ms_declspec_modifier = (
 [@@deriving sexp_of]
 
 type preproc_def = (
-    pat_c3ea183 (*tok*)
+    pat_c3ea183
   * identifier (*tok*)
   * preproc_arg (*tok*) option
   * Token.t (* "\n" *)
@@ -282,7 +285,7 @@ and preproc_expression = [
 [@@deriving sexp_of]
 
 type preproc_params = (
-    Token.t (* "(" *)
+    imm_tok_lpar
   * (
         anon_choice_type_id_d3c4b5f
       * (Token.t (* "," *) * anon_choice_type_id_d3c4b5f)
@@ -294,7 +297,7 @@ type preproc_params = (
 [@@deriving sexp_of]
 
 type preproc_function_def = (
-    pat_c3ea183 (*tok*)
+    pat_c3ea183
   * identifier (*tok*)
   * preproc_params
   * preproc_arg (*tok*) option
@@ -355,11 +358,11 @@ and anon_choice_param_decl_bdc8cc9 = [
 
 and anon_choice_prep_else_in_field_decl_list_97ea65e = [
     `Prep_else_in_field_decl_list of (
-        pat_56631e5 (*tok*)
+        pat_56631e5
       * field_declaration_list_item list (* zero or more *)
     )
   | `Prep_elif_in_field_decl_list of (
-        pat_bfeb4bb (*tok*)
+        pat_bfeb4bb
       * preproc_expression
       * Token.t (* "\n" *)
       * field_declaration_list_item list (* zero or more *)
@@ -548,19 +551,19 @@ and field_declaration_list_item = [
   | `Prep_func_def of preproc_function_def
   | `Prep_call of preproc_call
   | `Prep_if_in_field_decl_list of (
-        pat_3df6e71 (*tok*)
+        pat_3df6e71
       * preproc_expression
       * Token.t (* "\n" *)
       * field_declaration_list_item list (* zero or more *)
       * anon_choice_prep_else_in_field_decl_list_97ea65e option
-      * pat_c46d1b2 (*tok*)
+      * pat_c46d1b2
     )
   | `Prep_ifdef_in_field_decl_list of (
         anon_choice_pat_25b90ba_4a37f8c
       * identifier (*tok*)
       * field_declaration_list_item list (* zero or more *)
       * anon_choice_prep_else_in_field_decl_list_97ea65e option
-      * pat_c46d1b2 (*tok*)
+      * pat_c46d1b2
     )
 ]
 
@@ -742,9 +745,9 @@ type declaration = (
 [@@deriving sexp_of]
 
 type anon_choice_prep_else_8b52b0f = [
-    `Prep_else of (pat_56631e5 (*tok*) * translation_unit)
+    `Prep_else of (pat_56631e5 * translation_unit)
   | `Prep_elif of (
-        pat_bfeb4bb (*tok*)
+        pat_bfeb4bb
       * preproc_expression
       * Token.t (* "\n" *)
       * translation_unit
@@ -846,22 +849,22 @@ and top_level_item = [
   | `Type_defi of type_definition
   | `Empty_decl of (type_specifier * Token.t (* ";" *))
   | `Prep_if of (
-        pat_3df6e71 (*tok*)
+        pat_3df6e71
       * preproc_expression
       * Token.t (* "\n" *)
       * translation_unit
       * anon_choice_prep_else_8b52b0f option
-      * pat_c46d1b2 (*tok*)
+      * pat_c46d1b2
     )
   | `Prep_ifdef of (
         anon_choice_pat_25b90ba_4a37f8c
       * identifier (*tok*)
       * translation_unit
       * anon_choice_prep_else_8b52b0f option
-      * pat_c46d1b2 (*tok*)
+      * pat_c46d1b2
     )
   | `Prep_incl of (
-        pat_ca8830e (*tok*)
+        pat_ca8830e
       * [
             `Str_lit of string_literal
           | `System_lib_str of system_lib_string (*tok*)
@@ -876,9 +879,6 @@ and top_level_item = [
 ]
 
 and translation_unit = top_level_item list (* zero or more *)
-[@@deriving sexp_of]
-
-type imm_tok_LPAR (* inlined *) = Token.t (* "(" *)
 [@@deriving sexp_of]
 
 type ms_unsigned_ptr_modifier (* inlined *) = Token.t (* "__uptr" *)
@@ -950,7 +950,7 @@ type preproc_unary_expression (* inlined *) = (
 [@@deriving sexp_of]
 
 type preproc_include (* inlined *) = (
-    pat_ca8830e (*tok*)
+    pat_ca8830e
   * [
         `Str_lit of string_literal
       | `System_lib_str of system_lib_string (*tok*)
@@ -1129,7 +1129,7 @@ type pointer_field_declarator (* inlined *) = (
 [@@deriving sexp_of]
 
 type preproc_elif_in_field_declaration_list (* inlined *) = (
-    pat_bfeb4bb (*tok*)
+    pat_bfeb4bb
   * preproc_expression
   * Token.t (* "\n" *)
   * field_declaration_list_item list (* zero or more *)
@@ -1138,18 +1138,18 @@ type preproc_elif_in_field_declaration_list (* inlined *) = (
 [@@deriving sexp_of]
 
 type preproc_else_in_field_declaration_list (* inlined *) = (
-    pat_56631e5 (*tok*)
+    pat_56631e5
   * field_declaration_list_item list (* zero or more *)
 )
 [@@deriving sexp_of]
 
 type preproc_if_in_field_declaration_list (* inlined *) = (
-    pat_3df6e71 (*tok*)
+    pat_3df6e71
   * preproc_expression
   * Token.t (* "\n" *)
   * field_declaration_list_item list (* zero or more *)
   * anon_choice_prep_else_in_field_decl_list_97ea65e option
-  * pat_c46d1b2 (*tok*)
+  * pat_c46d1b2
 )
 [@@deriving sexp_of]
 
@@ -1158,7 +1158,7 @@ type preproc_ifdef_in_field_declaration_list (* inlined *) = (
   * identifier (*tok*)
   * field_declaration_list_item list (* zero or more *)
   * anon_choice_prep_else_in_field_decl_list_97ea65e option
-  * pat_c46d1b2 (*tok*)
+  * pat_c46d1b2
 )
 [@@deriving sexp_of]
 
@@ -1293,7 +1293,7 @@ type linkage_specification (* inlined *) = (
 [@@deriving sexp_of]
 
 type preproc_elif (* inlined *) = (
-    pat_bfeb4bb (*tok*)
+    pat_bfeb4bb
   * preproc_expression
   * Token.t (* "\n" *)
   * translation_unit
@@ -1301,16 +1301,16 @@ type preproc_elif (* inlined *) = (
 )
 [@@deriving sexp_of]
 
-type preproc_else (* inlined *) = (pat_56631e5 (*tok*) * translation_unit)
+type preproc_else (* inlined *) = (pat_56631e5 * translation_unit)
 [@@deriving sexp_of]
 
 type preproc_if (* inlined *) = (
-    pat_3df6e71 (*tok*)
+    pat_3df6e71
   * preproc_expression
   * Token.t (* "\n" *)
   * translation_unit
   * anon_choice_prep_else_8b52b0f option
-  * pat_c46d1b2 (*tok*)
+  * pat_c46d1b2
 )
 [@@deriving sexp_of]
 
@@ -1319,7 +1319,7 @@ type preproc_ifdef (* inlined *) = (
   * identifier (*tok*)
   * translation_unit
   * anon_choice_prep_else_8b52b0f option
-  * pat_c46d1b2 (*tok*)
+  * pat_c46d1b2
 )
 [@@deriving sexp_of]
 
