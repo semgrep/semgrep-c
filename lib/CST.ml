@@ -8,13 +8,15 @@
 open! Sexplib.Conv
 open Tree_sitter_run
 
-type imm_tok_pat_509ec78 = Token.t (* pattern \r?\n *)
+type imm_tok_pat_36637e2 = Token.t (* pattern "[^\\n']" *)
 
-type primitive_type = Token.t
+type false_ = Token.t
 
-type escape_sequence = Token.t
+type continue_statement = (Token.t (* "continue" *) * Token.t (* ";" *))
 
-type pat_ca8830e = Token.t (* pattern #[ 	]*include *)
+type break_statement = (Token.t (* "break" *) * Token.t (* ";" *))
+
+type pat_c3ea183 = Token.t (* pattern #[ 	]*define *)
 
 type anon_choice_BANG_67174d6 = [
     `BANG of Token.t (* "!" *)
@@ -23,11 +25,8 @@ type anon_choice_BANG_67174d6 = [
   | `PLUS of Token.t (* "+" *)
 ]
 
-type imm_tok_lpar = Token.t (* "(" *)
-
-type imm_tok_pat_36637e2 = Token.t (* pattern "[^\\n']" *)
-
-type pat_0307ca2 = Token.t (* pattern #[ 	]*elifdef *)
+type identifier =
+  Token.t (* pattern (\p{XID_Start}|_|\\u[0-9A-Fa-f]{4}|\\U[0-9A-Fa-f]{8})(\p{XID_Continue}|\\u[0-9A-Fa-f]{4}|\\U[0-9A-Fa-f]{8})* *)
 
 type type_qualifier = [
     `Const of Token.t (* "const" *)
@@ -35,25 +34,35 @@ type type_qualifier = [
   | `Vola of Token.t (* "volatile" *)
   | `Rest of Token.t (* "restrict" *)
   | `X___rest__ of Token.t (* "__restrict__" *)
+  | `X___exte__ of Token.t (* "__extension__" *)
   | `X__Atomic of Token.t (* "_Atomic" *)
   | `X__Nore of Token.t (* "_Noreturn" *)
   | `Nore of Token.t (* "noreturn" *)
 ]
 
-type imm_tok_prec_p1_pat_c7f65b4 = Token.t (* pattern "[^\\\\\"\\n]+" *)
+type imm_tok_lpar = Token.t (* "(" *)
 
-type continue_statement = (Token.t (* "continue" *) * Token.t (* ";" *))
-
-type false_ = Token.t
-
-type preproc_directive = Token.t (* pattern #[ \t]*[a-zA-Z0-9]\w* *)
-
-type ms_unaligned_ptr_modifier = [
-    `X__unal of Token.t (* "_unaligned" *)
-  | `X___unal of Token.t (* "__unaligned" *)
+type gnu_asm_qualifier = [
+    `Vola of Token.t (* "volatile" *)
+  | `Inline of Token.t (* "inline" *)
+  | `Goto of Token.t (* "goto" *)
 ]
 
-type pat_9d92f6a = Token.t (* pattern #[ 	]*ifndef *)
+type number_literal = Token.t
+
+type true_ = Token.t
+
+type imm_tok_pat_509ec78 = Token.t (* pattern \r?\n *)
+
+type escape_sequence = Token.t
+
+type system_lib_string = Token.t
+
+type pat_3df6e71 = Token.t (* pattern #[ 	]*if *)
+
+type imm_tok_prec_p1_pat_c7f65b4 = Token.t (* pattern "[^\\\\\"\\n]+" *)
+
+type pat_0307ca2 = Token.t (* pattern #[ 	]*elifdef *)
 
 type storage_class_specifier = [
     `Extern of Token.t (* "extern" *)
@@ -61,8 +70,18 @@ type storage_class_specifier = [
   | `Auto of Token.t (* "auto" *)
   | `Regi of Token.t (* "register" *)
   | `Inline of Token.t (* "inline" *)
+  | `X___inline of Token.t (* "__inline" *)
+  | `X___inline__ of Token.t (* "__inline__" *)
+  | `X___forc of Token.t (* "__forceinline" *)
   | `Thread_local of Token.t (* "thread_local" *)
+  | `X___thread of Token.t (* "__thread" *)
 ]
+
+type primitive_type = Token.t
+
+type preproc_arg = Token.t
+
+type variadic_parameter = Token.t (* "..." *)
 
 type ms_call_modifier = [
     `X___cdecl of Token.t (* "__cdecl" *)
@@ -73,19 +92,11 @@ type ms_call_modifier = [
   | `X___vect of Token.t (* "__vectorcall" *)
 ]
 
-type pat_3df6e71 = Token.t (* pattern #[ 	]*if *)
+type preproc_directive = Token.t (* pattern #[ \t]*[a-zA-Z0-9]\w* *)
 
-type system_lib_string = Token.t
+type pat_ca8830e = Token.t (* pattern #[ 	]*include *)
 
-type null = [
-    `NULL of Token.t (* "NULL" *)
-  | `Null of Token.t (* "nullptr" *)
-]
-
-type identifier =
-  Token.t (* pattern (\p{XID_Start}|_|\\u[0-9A-Fa-f]{4}|\\U[0-9A-Fa-f]{8})(\p{XID_Continue}|\\u[0-9A-Fa-f]{4}|\\U[0-9A-Fa-f]{8})* *)
-
-type pat_c46d1b2 = Token.t (* pattern #[ 	]*endif *)
+type pat_bfeb4bb = Token.t (* pattern #[ 	]*elif *)
 
 type anon_choice_signed_a0bfc19 = [
     `Signed of Token.t (* "signed" *)
@@ -94,33 +105,29 @@ type anon_choice_signed_a0bfc19 = [
   | `Short of Token.t (* "short" *)
 ]
 
-type pat_25b90ba = Token.t (* pattern #[ 	]*ifdef *)
-
-type pat_a6d4183 = Token.t (* pattern #[ 	]*elifndef *)
-
-type pat_bfeb4bb = Token.t (* pattern #[ 	]*elif *)
-
-type preproc_arg = Token.t
+type ms_unaligned_ptr_modifier = [
+    `X__unal of Token.t (* "_unaligned" *)
+  | `X___unal of Token.t (* "__unaligned" *)
+]
 
 type pat_56631e5 = Token.t (* pattern #[ 	]*else *)
 
-type true_ = Token.t
+type pat_9d92f6a = Token.t (* pattern #[ 	]*ifndef *)
 
-type break_statement = (Token.t (* "break" *) * Token.t (* ";" *))
+type pat_c46d1b2 = Token.t (* pattern #[ 	]*endif *)
 
-type number_literal = Token.t
+type pat_25b90ba = Token.t (* pattern #[ 	]*ifdef *)
 
-type pat_c3ea183 = Token.t (* pattern #[ 	]*define *)
+type null = [
+    `NULL of Token.t (* "NULL" *)
+  | `Null of Token.t (* "nullptr" *)
+]
+
+type pat_a6d4183 = Token.t (* pattern #[ 	]*elifndef *)
 
 type anon_choice_DASHDASH_d11def2 = [
     `DASHDASH of Token.t (* "--" *)
   | `PLUSPLUS of Token.t (* "++" *)
-]
-
-type gnu_asm_qualifier = [
-    `Vola of Token.t (* "volatile" *)
-  | `Inline of Token.t (* "inline" *)
-  | `Goto of Token.t (* "goto" *)
 ]
 
 type char_literal = (
@@ -154,6 +161,12 @@ type string_literal = (
   * Token.t (* "\"" *)
 )
 
+type preproc_call = (
+    preproc_directive (*tok*)
+  * preproc_arg (*tok*) option
+  * imm_tok_pat_509ec78
+)
+
 type ms_pointer_modifier = [
     `Ms_unal_ptr_modi of ms_unaligned_ptr_modifier
   | `Ms_rest_modi of Token.t (* "__restrict" *)
@@ -171,27 +184,13 @@ type anon_choice_pat_0307ca2_dbf6a9d = [
   | `Pat_a6d4183 of pat_a6d4183
 ]
 
-type preproc_call = (
-    preproc_directive (*tok*)
-  * preproc_arg (*tok*) option
-  * imm_tok_pat_509ec78
-)
-
-type gnu_asm_clobber_list = (
+type gnu_asm_goto_list = (
     Token.t (* ":" *)
   * (
-        string_literal
-      * (Token.t (* "," *) * string_literal) list (* zero or more *)
+        identifier (*tok*)
+      * (Token.t (* "," *) * identifier (*tok*)) list (* zero or more *)
     )
       option
-)
-
-type gnu_asm_output_operand = (
-    (Token.t (* "[" *) * identifier (*tok*) * Token.t (* "]" *)) option
-  * string_literal
-  * Token.t (* "(" *)
-  * identifier (*tok*)
-  * Token.t (* ")" *)
 )
 
 type preproc_defined = [
@@ -202,6 +201,8 @@ type preproc_defined = [
   | `Defi_id of (Token.t (* "defined" *) * identifier (*tok*))
 ]
 
+type field_designator = (Token.t (* "." *) * identifier (*tok*))
+
 type preproc_def = (
     pat_c3ea183
   * identifier (*tok*)
@@ -209,24 +210,18 @@ type preproc_def = (
   * imm_tok_pat_509ec78
 )
 
-type field_designator = (Token.t (* "." *) * identifier (*tok*))
+type anon_choice_type_id_d3c4b5f = [
+    `Id of identifier (*tok*)
+  | `DOTDOTDOT of Token.t (* "..." *)
+]
 
 type goto_statement = (
     Token.t (* "goto" *) * identifier (*tok*) * Token.t (* ";" *)
 )
 
-type gnu_asm_goto_list = (
-    Token.t (* ":" *)
-  * (
-        identifier (*tok*)
-      * (Token.t (* "," *) * identifier (*tok*)) list (* zero or more *)
-    )
-      option
-)
-
-type anon_choice_type_id_d3c4b5f = [
+type anon_choice_type_id_fe6e1ce = [
     `Id of identifier (*tok*)
-  | `DOTDOTDOT of Token.t (* "..." *)
+  | `Vari_param of variadic_parameter
 ]
 
 type ms_declspec_modifier = (
@@ -235,16 +230,25 @@ type ms_declspec_modifier = (
 )
 
 type concatenated_string = (
-    string_literal
+    [ `Id of identifier (*tok*) | `Str_lit of string_literal ]
+  * string_literal
   * [ `Str_lit of string_literal | `Id of identifier (*tok*) ]
-      list (* one or more *)
+      list (* zero or more *)
 )
 
-type gnu_asm_output_operand_list = (
+type gnu_asm_output_operand = (
+    (Token.t (* "[" *) * identifier (*tok*) * Token.t (* "]" *)) option
+  * string_literal
+  * Token.t (* "(" *)
+  * identifier (*tok*)
+  * Token.t (* ")" *)
+)
+
+type gnu_asm_clobber_list = (
     Token.t (* ":" *)
   * (
-        gnu_asm_output_operand
-      * (Token.t (* "," *) * gnu_asm_output_operand) list (* zero or more *)
+        string_literal
+      * (Token.t (* "," *) * string_literal) list (* zero or more *)
     )
       option
 )
@@ -342,6 +346,26 @@ type preproc_params = (
   * Token.t (* ")" *)
 )
 
+type old_style_parameter_list = (
+    Token.t (* "(" *)
+  * (
+        anon_choice_type_id_fe6e1ce
+      * (Token.t (* "," *) * anon_choice_type_id_fe6e1ce)
+          list (* zero or more *)
+    )
+      option
+  * Token.t (* ")" *)
+)
+
+type gnu_asm_output_operand_list = (
+    Token.t (* ":" *)
+  * (
+        gnu_asm_output_operand
+      * (Token.t (* "," *) * gnu_asm_output_operand) list (* zero or more *)
+    )
+      option
+)
+
 type preproc_include = (
     pat_ca8830e
   * [
@@ -380,8 +404,8 @@ type abstract_declarator = [
     )
 ]
 
-and anon_choice_decl_f8b0ff3 = [
-    `Decl of declarator
+and anon_choice_decl_opt_gnu_asm_exp_2c80446 = [
+    `Decl_opt_gnu_asm_exp of (declarator * gnu_asm_expression option)
   | `Init_decl of (
         declarator
       * Token.t (* "=" *)
@@ -399,11 +423,6 @@ and anon_choice_exp_55b4dba = [
   | `Comma_exp of (expression * Token.t (* "," *) * anon_choice_exp_55b4dba)
 ]
 
-and anon_choice_exp_f079e30 = [
-    `Exp of expression
-  | `Comp_stmt of compound_statement
-]
-
 and anon_choice_init_pair_1a6981e = [
     `Init_pair of (
         [
@@ -418,12 +437,17 @@ and anon_choice_init_pair_1a6981e = [
   | `Init_list of initializer_list
 ]
 
+and anon_choice_opt___exte___exp_2bc8eaa = [
+    `Opt___exte___exp of (Token.t (* "__extension__" *) option * expression)
+  | `Comp_stmt of compound_statement
+]
+
 and anon_choice_param_decl_4ac2852 = [
     `Param_decl of (
         declaration_specifiers
       * [ `Decl of declarator | `Abst_decl of abstract_declarator ] option
     )
-  | `Vari_param of Token.t (* "..." *)
+  | `Vari_param of variadic_parameter
 ]
 
 and anon_choice_prep_else_8b52b0f = [
@@ -462,8 +486,9 @@ and anon_choice_type_id_opt_field_decl_list_9aebd83 = [
 and argument_list = (
     Token.t (* "(" *)
   * (
-        anon_choice_exp_f079e30
-      * (Token.t (* "," *) * anon_choice_exp_f079e30) list (* zero or more *)
+        anon_choice_opt___exte___exp_2bc8eaa
+      * (Token.t (* "," *) * anon_choice_opt___exte___exp_2bc8eaa)
+          list (* zero or more *)
     )
       option
   * Token.t (* ")" *)
@@ -526,6 +551,7 @@ and bitfield_clause = (Token.t (* ":" *) * expression)
 
 and block_item = [
     `Func_defi of function_definition
+  | `Old_style_func_defi of old_style_function_definition
   | `Link_spec of linkage_specification
   | `Decl of declaration
   | `Choice_case_stmt of statement
@@ -563,10 +589,13 @@ and compound_statement = (
 )
 
 and declaration = (
-    declaration_specifiers
-  * anon_choice_decl_f8b0ff3
-  * (Token.t (* "," *) * anon_choice_decl_f8b0ff3) list (* zero or more *)
-  * Token.t (* ";" *)
+    declaration_specifiers * declaration_declarator * Token.t (* ";" *)
+)
+
+and declaration_declarator = (
+    anon_choice_decl_opt_gnu_asm_exp_2c80446
+  * (Token.t (* "," *) * anon_choice_decl_opt_gnu_asm_exp_2c80446)
+      list (* zero or more *)
 )
 
 and declaration_list = (
@@ -601,6 +630,7 @@ and declarator = [
   | `Func_decl of (
         declarator
       * parameter_list
+      * gnu_asm_expression option
       * attribute_specifier list (* zero or more *)
     )
   | `Array_decl of (
@@ -681,6 +711,18 @@ and expression_not_binary = [
             )
         ]
     )
+  | `Alig_exp of (
+        [
+            `X___alig__ of Token.t (* "__alignof__" *)
+          | `X___alig of Token.t (* "__alignof" *)
+          | `X__alig of Token.t (* "_alignof" *)
+          | `Alig of Token.t (* "alignof" *)
+          | `X__Alig of Token.t (* "_Alignof" *)
+        ]
+      * Token.t (* "(" *)
+      * type_descriptor
+      * Token.t (* ")" *)
+    )
   | `Offs_exp of (
         Token.t (* "offsetof" *) * Token.t (* "(" *) * type_descriptor
       * Token.t (* "," *) * identifier (*tok*) * Token.t (* ")" *)
@@ -716,30 +758,19 @@ and expression_not_binary = [
   | `Conc_str of concatenated_string
   | `Char_lit of char_literal
   | `Paren_exp of parenthesized_expression
-  | `Gnu_asm_exp of (
-        [
-            `Asm of Token.t (* "asm" *)
-          | `X___asm__ of Token.t (* "__asm__" *)
-        ]
-      * gnu_asm_qualifier list (* zero or more *)
-      * Token.t (* "(" *)
-      * [ `Str_lit of string_literal | `Conc_str of concatenated_string ]
-      * (
-            gnu_asm_output_operand_list
-          * (
-                gnu_asm_input_operand_list
-              * (gnu_asm_clobber_list * gnu_asm_goto_list option) option
-            )
-              option
-        )
-          option
-      * Token.t (* ")" *)
-    )
+  | `Gnu_asm_exp of gnu_asm_expression
 ]
 
 and expression_statement = (
     anon_choice_exp_55b4dba option
   * Token.t (* ";" *)
+)
+
+and field_declaration_declarator = (
+    field_declarator
+  * bitfield_clause option
+  * (Token.t (* "," *) * field_declarator * bitfield_clause option)
+      list (* zero or more *)
 )
 
 and field_declaration_list = (
@@ -751,13 +782,7 @@ and field_declaration_list = (
 and field_declaration_list_item = [
     `Field_decl of (
         declaration_specifiers
-      * (
-            field_declarator
-          * bitfield_clause option
-          * (Token.t (* "," *) * field_declarator * bitfield_clause option)
-              list (* zero or more *)
-        )
-          option
+      * field_declaration_declarator option
       * attribute_specifier option
       * Token.t (* ";" *)
     )
@@ -819,14 +844,15 @@ and field_expression = (
 )
 
 and for_statement = (
-    Token.t (* "for" *)
-  * Token.t (* "(" *)
-  * [ `Decl of declaration | `Opt_choice_exp_SEMI of expression_statement ]
+    Token.t (* "for" *) * Token.t (* "(" *) * for_statement_body
+  * Token.t (* ")" *) * statement
+)
+
+and for_statement_body = (
+    [ `Decl of declaration | `Opt_choice_exp_SEMI of expression_statement ]
   * anon_choice_exp_55b4dba option
   * Token.t (* ";" *)
   * anon_choice_exp_55b4dba option
-  * Token.t (* ")" *)
-  * statement
 )
 
 and function_definition = (
@@ -834,6 +860,23 @@ and function_definition = (
   * declaration_specifiers
   * declarator
   * compound_statement
+)
+
+and gnu_asm_expression = (
+    [ `Asm of Token.t (* "asm" *) | `X___asm__ of Token.t (* "__asm__" *) ]
+  * gnu_asm_qualifier list (* zero or more *)
+  * Token.t (* "(" *)
+  * [ `Str_lit of string_literal | `Conc_str of concatenated_string ]
+  * (
+        gnu_asm_output_operand_list
+      * (
+            gnu_asm_input_operand_list
+          * (gnu_asm_clobber_list * gnu_asm_goto_list option) option
+        )
+          option
+    )
+      option
+  * Token.t (* ")" *)
 )
 
 and gnu_asm_input_operand = (
@@ -901,6 +944,16 @@ and non_case_statement = [
   | `Cont_stmt of continue_statement
   | `Goto_stmt of goto_statement
 ]
+
+and old_style_function_declarator = (declarator * old_style_parameter_list)
+
+and old_style_function_definition = (
+    ms_call_modifier option
+  * declaration_specifiers
+  * old_style_function_declarator
+  * declaration list (* zero or more *)
+  * compound_statement
+)
 
 and parameter_list = (
     Token.t (* "(" *)
@@ -1002,13 +1055,23 @@ and type_declarator = [
 ]
 
 and type_definition = (
-    Token.t (* "typedef" *)
-  * type_qualifier list (* zero or more *)
+    Token.t (* "__extension__" *) option
+  * Token.t (* "typedef" *)
+  * type_definition_type
+  * type_definition_declarators
+  * attribute_specifier list (* zero or more *)
+  * Token.t (* ";" *)
+)
+
+and type_definition_declarators = (
+    type_declarator
+  * (Token.t (* "," *) * type_declarator) list (* zero or more *)
+)
+
+and type_definition_type = (
+    type_qualifier list (* zero or more *)
   * type_specifier
   * type_qualifier list (* zero or more *)
-  * type_declarator
-  * (Token.t (* "," *) * type_declarator) list (* zero or more *)
-  * Token.t (* ";" *)
 )
 
 and type_descriptor = (
@@ -1085,6 +1148,7 @@ type top_level_statement = [
 
 type top_level_item = [
     `Func_defi of function_definition
+  | `Old_style_func_defi of old_style_function_definition
   | `Link_spec of linkage_specification
   | `Decl of declaration
   | `Choice_case_stmt of top_level_statement
@@ -1105,15 +1169,13 @@ type ms_restrict_modifier (* inlined *) = Token.t (* "__restrict" *)
 
 type ms_signed_ptr_modifier (* inlined *) = Token.t (* "__sptr" *)
 
-type variadic_parameter (* inlined *) = Token.t (* "..." *)
+type ms_unsigned_ptr_modifier (* inlined *) = Token.t (* "__uptr" *)
 
 type comment (* inlined *) = Token.t
 
-type ms_unsigned_ptr_modifier (* inlined *) = Token.t (* "__uptr" *)
+type type_identifier (* inlined *) = identifier (*tok*)
 
 type field_identifier (* inlined *) = identifier (*tok*)
-
-type type_identifier (* inlined *) = identifier (*tok*)
 
 type statement_identifier (* inlined *) = identifier (*tok*)
 
@@ -1152,6 +1214,19 @@ type abstract_pointer_declarator (* inlined *) = (
     Token.t (* "*" *)
   * type_qualifier list (* zero or more *)
   * abstract_declarator option
+)
+
+type alignof_expression (* inlined *) = (
+    [
+        `X___alig__ of Token.t (* "__alignof__" *)
+      | `X___alig of Token.t (* "__alignof" *)
+      | `X__alig of Token.t (* "_alignof" *)
+      | `Alig of Token.t (* "alignof" *)
+      | `X__Alig of Token.t (* "_Alignof" *)
+    ]
+  * Token.t (* "(" *)
+  * type_descriptor
+  * Token.t (* ")" *)
 )
 
 type array_declarator (* inlined *) = (
@@ -1247,13 +1322,7 @@ type enum_specifier (* inlined *) = (
 
 type field_declaration (* inlined *) = (
     declaration_specifiers
-  * (
-        field_declarator
-      * bitfield_clause option
-      * (Token.t (* "," *) * field_declarator * bitfield_clause option)
-          list (* zero or more *)
-    )
-      option
+  * field_declaration_declarator option
   * attribute_specifier option
   * Token.t (* ";" *)
 )
@@ -1261,6 +1330,7 @@ type field_declaration (* inlined *) = (
 type function_declarator (* inlined *) = (
     declarator
   * parameter_list
+  * gnu_asm_expression option
   * attribute_specifier list (* zero or more *)
 )
 
@@ -1282,23 +1352,6 @@ type generic_expression (* inlined *) = (
   * expression
   * (Token.t (* "," *) * type_descriptor * Token.t (* ":" *) * expression)
       list (* zero or more *)
-  * Token.t (* ")" *)
-)
-
-type gnu_asm_expression (* inlined *) = (
-    [ `Asm of Token.t (* "asm" *) | `X___asm__ of Token.t (* "__asm__" *) ]
-  * gnu_asm_qualifier list (* zero or more *)
-  * Token.t (* "(" *)
-  * [ `Str_lit of string_literal | `Conc_str of concatenated_string ]
-  * (
-        gnu_asm_output_operand_list
-      * (
-            gnu_asm_input_operand_list
-          * (gnu_asm_clobber_list * gnu_asm_goto_list option) option
-        )
-          option
-    )
-      option
   * Token.t (* ")" *)
 )
 
