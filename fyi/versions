@@ -1,6 +1,6 @@
 File: semgrep-grammars/src/tree-sitter-c/LICENSE
 Git repo name: tree-sitter-c
-Latest commit in repo: f1075f2d65ecb62725821fd8a34ce68c1fa8ae51
+Latest commit in repo: ecdd500806cf8154d944344f1df6418b32e0e9a7
 Last change in file:
   commit af2904ca831cbb33cdc3bb7bacc2ed9840bd0a3c
   Author: Max Brunsfeld <maxbrunsfeld@gmail.com>
@@ -10,17 +10,17 @@ Last change in file:
 ---
 File: semgrep-grammars/src/tree-sitter-c/grammar.js
 Git repo name: tree-sitter-c
-Latest commit in repo: f1075f2d65ecb62725821fd8a34ce68c1fa8ae51
+Latest commit in repo: ecdd500806cf8154d944344f1df6418b32e0e9a7
 Last change in file:
-  commit f1075f2d65ecb62725821fd8a34ce68c1fa8ae51
-  Author: Phil Turnbull <philip.turnbull@gmail.com>
-  Date:   Wed Oct 4 18:08:40 2023 -0400
+  commit ecdd500806cf8154d944344f1df6418b32e0e9a7
+  Author: Brandon Wu <49291449+brandonspark@users.noreply.github.com>
+  Date:   Fri Jan 26 12:20:17 2024 -0800
   
-      fix: `sizeof` precedence is incorrect
+      fix: properly suffix elifdef
 ---
 File: semgrep-grammars/src/semgrep-c/grammar.js
 Git repo name: ocaml-tree-sitter-semgrep
-Latest commit in repo: 5218c675f7c7b1016f265701aac3a5fa8f56f8a7
+Latest commit in repo: 4b275e154b31bc2dea834c8928bd6179f2189c7d
 Last change in file:
   commit 21c23bba3c765f931afbc2aa8718c41849121dfb
   Author: Martin Jambon <martin@returntocorp.com>
