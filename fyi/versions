@@ -19,8 +19,8 @@ Last change in file:
       fix: properly suffix elifdef
 ---
 File: semgrep-grammars/src/semgrep-c/grammar.js
-Git repo name: ocaml-tree-sitter-semgrep
-Latest commit in repo: 11faa37aaa17c8add2862c9a43e723102a0812e8
+Git repo name: ocaml-tree-sitter-semgrep2
+Latest commit in repo: 58c33ed8a5f59344124fe5840dc8a493c67d1c32
 Last change in file:
   commit 21c23bba3c765f931afbc2aa8718c41849121dfb
   Author: Martin Jambon <martin@returntocorp.com>
