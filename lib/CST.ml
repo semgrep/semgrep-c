@@ -1681,6 +1681,6 @@ type top_level_expression_statement (* inlined *) = (
     expression_not_binary * Token.t (* ";" *)
 )
 
-type extra = Comment of Loc.t * comment
+type extra = [ `Comment of Loc.t * comment ]
 
 type extras = extra list
