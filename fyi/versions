@@ -2,11 +2,11 @@ File: semgrep-grammars/src/tree-sitter-c/LICENSE
 Git repo name: tree-sitter-c
 Latest commit in repo: ecdd500806cf8154d944344f1df6418b32e0e9a7
 Last change in file:
-  commit ecdd500806cf8154d944344f1df6418b32e0e9a7
-  Author: Brandon Wu <49291449+brandonspark@users.noreply.github.com>
-  Date:   Fri Jan 26 12:20:17 2024 -0800
+  commit af2904ca831cbb33cdc3bb7bacc2ed9840bd0a3c
+  Author: Max Brunsfeld <maxbrunsfeld@gmail.com>
+  Date:   Fri Sep 5 23:53:51 2014 -0700
   
-      fix: properly suffix elifdef
+      Initial commit
 ---
 File: semgrep-grammars/src/tree-sitter-c/grammar.js
 Git repo name: tree-sitter-c
@@ -19,12 +19,27 @@ Last change in file:
       fix: properly suffix elifdef
 ---
 File: semgrep-grammars/src/semgrep-c/grammar.js
-Git repo name: ocaml-tree-sitter-semgrep
-Latest commit in repo: 091f5438fc0c15b80217f00e5b94ec0e55517383
+Git repo name: agent-adc21bc7bd77eff7b
+Latest commit in repo: 1c14a656edae83e67a947bf2654414a7de926d5e
 Last change in file:
-  commit 21c23bba3c765f931afbc2aa8718c41849121dfb
-  Author: Martin Jambon <martin@returntocorp.com>
-  Date:   Wed Feb 17 18:37:28 2021 -0800
+  commit 1c14a656edae83e67a947bf2654414a7de926d5e
+  Author: brandonspark <brandon@semgrep.com>
+  Date:   Wed Apr 29 17:59:49 2026 -0700
   
-      Migrate C to the modern setup
+      fix(c): add Semgrep grammar augmentation (was empty)
+      
+      The Semgrep C grammar augmentation in
+      lang/semgrep-grammars/src/semgrep-c/grammar.js was a no-op (rules block
+      fully commented out), so any pattern using `...` outside a variadic
+      parameter list, deep ellipsis, ellipsis-metavariable, or parenthesized
+      typed metavariable failed to parse. Mirrors the C++ augmentation:
+      adds semgrep_ellipsis / deep_ellipsis / semgrep_named_ellipsis /
+      semgrep_metavar / semgrep_typed_metavar and wires them into _expression,
+      _block_item, _top_level_item, _field_declaration_list_item,
+      _field_identifier, parenthesized_expression, plus a __SEMGREP_EXPRESSION
+      entry point. Includes 16 corpus tests covering each pattern category.
+      
+      Fixes LANG-471, LANG-473.
+      
+      Co-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>
 ---
